@@ -42,7 +42,7 @@ Graph::Graph( const Graph& graph )
 
 Graph::~Graph(void)
 {
-	clear();
+//	clear();  //------------fixed clear memory leak----------------------------
 }
 
 ///////////////////////////////////////////////////////////////////////////////

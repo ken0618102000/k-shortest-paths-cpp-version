@@ -46,9 +46,11 @@ public:
 		_init();
 	}
 
-	~YenTopKShortestPathsAlg(void){clear();}
+	~YenTopKShortestPathsAlg(void)
+	{clearAll();}
 
 	void clear();
+	void clearAll();
 	bool has_next();	
 	BasePath* next();
 

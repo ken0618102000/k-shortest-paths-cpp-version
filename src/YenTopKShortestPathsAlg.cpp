@@ -25,9 +25,28 @@ using namespace std;
 void YenTopKShortestPathsAlg::clear()
 {
 	m_nGeneratedPathNum = 0;
-	m_mpDerivationVertexIndex.clear();
-	m_vResultList.clear();
-	m_quPathCandidates.clear();
+	//------------fixed m_mpDerivationVertexIndex, m_vResultList, m_quPathCandidates memory leak---------------------------------------------
+	map<BasePath*, BaseVertex*>().swap(m_mpDerivationVertexIndex); 
+	vector<BasePath*>().swap(m_vResultList);
+	multiset<BasePath*, WeightLess<BasePath> >().swap(m_quPathCandidates);
+	
+//	m_mpDerivationVertexIndex.clear();
+//	m_vResultList.clear();
+//	m_quPathCandidates.clear();
+}
+
+void YenTopKShortestPathsAlg::clearAll() //------------fixed clear memory leak----------------------------
+{
+	m_nGeneratedPathNum = 0;
+	m_pGraph->clear();
+		//------------fixed m_mpDerivationVertexIndex, m_vResultList, m_quPathCandidates memory leak---------------------------------------------
+	map<BasePath*, BaseVertex*>().swap(m_mpDerivationVertexIndex);
+	vector<BasePath*>().swap(m_vResultList);
+	multiset<BasePath*, WeightLess<BasePath> >().swap(m_quPathCandidates);
+
+	//	m_mpDerivationVertexIndex.clear();
+	//	m_vResultList.clear();
+	//	m_quPathCandidates.clear();
 }
 
 void YenTopKShortestPathsAlg::_init()
@@ -165,7 +184,7 @@ BasePath* YenTopKShortestPathsAlg::next()
 			{
 				m_quPathCandidates.insert(sub_path);
 				m_mpDerivationVertexIndex[sub_path] = cur_recover_vertex;
-			}
+			}		
 		}
 
 		//4.5 Restore the edge
